@@ -9,5 +9,6 @@ namespace Domain.Entities
     internal class Assignment
     {
         public string? instruction { get; set; }
+
     }
 }
