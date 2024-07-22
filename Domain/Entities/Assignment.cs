@@ -8,7 +8,10 @@ namespace Domain.Entities
 {
     internal class Assignment
     {
+<<<<<<< HEAD
         public string? instruction { get; set; }
 
+=======
+>>>>>>> d67801dd4125926647fd3fdd93e636b8c862feed
     }
 }
