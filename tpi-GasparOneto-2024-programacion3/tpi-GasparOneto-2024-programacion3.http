@@ -1,0 +1,6 @@
+@tpi_GasparOneto_2024_programacion3_HostAddress = http://localhost:5110
+
+GET {{tpi_GasparOneto_2024_programacion3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
