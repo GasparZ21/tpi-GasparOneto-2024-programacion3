@@ -8,7 +8,8 @@ namespace Domain.Entities
 {
     public class Professor : User
     {
-        public string? subject {  get; set; }
+        public string subject { get; set; } = null!;
+        public List<Assignment> assignments { get; set; } = null!;
 
     }
 }

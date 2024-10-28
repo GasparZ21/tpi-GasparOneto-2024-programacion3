@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Assignment
+    public class Assignment
     {
-        public string? instruction { get; set; }
+        public string instruction { get; set; } = null!;
         public bool Status { get; set; }
+        public int StudentId { get; set; }
+        public Student Student { get; set; } = null!;
+        public int ProfessorId { get; set; }
+        public Professor Professor { get; set; } = null!;
 
     }
 }

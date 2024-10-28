@@ -10,7 +10,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         [HttpGet]
         public IActionResult GetUser()
         {
-
+           
         }
     }
 }

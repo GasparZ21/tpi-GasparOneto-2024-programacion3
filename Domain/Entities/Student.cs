@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Student : User
+    public class Student : User
     {
         int CourseSection {  get; set; }
+        public List<Assignment> assignments { get; set; } = null!;
     }
 }
