@@ -18,23 +18,23 @@ namespace Infraestructure.Data
                 _context = context;
             }
 
-            public Assignment Add(Assignment assignment)
+            public Professor Add(Assignment assignment)
             {
                 _context.Assignments.Add(assignment);
                 _context.SaveChanges();
                 return assignment;
             }
 
-            public Assignment Delete(Assignment assignment)
+            public Professor Delete(Assignment assignment)
             {
                 _context.Assignments.Remove(assignment);
                 _context.SaveChanges();
                 return assignment;
             }
 
-            public Assignment? GetByStatus(bool status)
+            public Professor? GetBySubject(string subject)
             {
-                return _context.Assignments.FirstOrDefault(u => u.Status == status);
+                return _context.Professors.FirstOrDefault(u => u.subject == subject);
             }
         }
     }
