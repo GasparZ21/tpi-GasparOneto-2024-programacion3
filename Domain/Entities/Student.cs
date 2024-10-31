@@ -9,6 +9,6 @@ namespace Domain.Entities
     public class Student : User
     {
         int CourseSection {  get; set; }
-        public List<Assignment> assignments { get; set; } = null!;
+        public ICollection<Assignment> assignments { get; set; } = null!;
     }
 }
