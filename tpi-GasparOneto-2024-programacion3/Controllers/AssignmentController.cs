@@ -55,7 +55,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
 
             try
             {
-                _assignmentService.DeleteByStatus(assignmentToDelete.Status);
+                _assignmentService.DeleteById(assignmentToDelete.Id);
                 return Ok();
             }
 

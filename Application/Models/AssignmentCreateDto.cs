@@ -10,6 +10,7 @@ namespace Application.Models
     public class AssignmentCreateDto
     {
         [Required]
+        public int Id { get; set; }
         public string Instruction {  get; set; }= string.Empty;
 
         [Required]
