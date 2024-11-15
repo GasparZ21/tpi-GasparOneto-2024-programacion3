@@ -9,32 +9,33 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Data
 {
-    public class ProfessorRepository : BaseRepository<Assignment>, IProfessorRepository
+    public class ProfessorRepository : BaseRepository<Professor>, IProfessorRepository
     {
         private readonly ApplicationDbContext _context;
         public ProfessorRepository(ApplicationDbContext context) : base(context)
         {
             {
                 _context = context;
-            }
+            } 
+        }
 
-            public Professor Add(Assignment assignment)
+            public Task Professor Add(Assignment assignment)
             {
                 _context.Assignments.Add(assignment);
                 _context.SaveChanges();
                 return assignment;
             }
 
-            public Professor Delete(Assignment assignment)
+            public Task Professor Delete(Professor professor)
             {
-                _context.Assignments.Remove(assignment);
+                _context.Professor.Remove(professor);
                 _context.SaveChanges();
-                return assignment;
+                return professor;
             }
 
-            public Professor? GetBySubject(string subject)
+            public Professor GetById(int id)
             {
-                return _context.Professors.FirstOrDefault(u => u.subject == subject);
+                return _context.Professors.FirstOrDefault(u => u.Id == id);
             }
         }
     }

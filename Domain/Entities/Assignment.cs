@@ -8,8 +8,17 @@ namespace Domain.Entities
 {
     public class Assignment
     {
-        public string instruction { get; set; } = null!;
+        public Assignment(string instruction, bool status, string subject)
+        {
+            Instruction = instruction;
+            Status = status;
+            Subject = subject;
+
+        }
+        public int Id {  get; set; }
+        public string Instruction { get; set; } = null!;
         public bool Status { get; set; }
+        public string Subject {  get; set; }
         public int StudentId { get; set; }
         public Student Student { get; set; } = null!;
         public int ProfessorId { get; set; }

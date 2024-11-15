@@ -9,8 +9,8 @@ namespace Domain.Interfaces
 {
     public interface IProfessorRepository
     {
-        Task<IEnumerable<Assignment>>GetByStatus(bool status);
-        Task<Assignment> Add(Assignment assignment);
-        Task<Assignment> Delete(int status);
+        Task<IEnumerable<Professor>>GetById(string subject);
+        Task<Professor> Add(Professor professor);
+        Task<Professor> Delete(int id);
     }
 }

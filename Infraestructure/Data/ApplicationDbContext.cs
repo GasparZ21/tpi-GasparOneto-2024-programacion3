@@ -19,15 +19,16 @@ namespace Infraestructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Professor>()
-                .HasMany(p => p.Assignment)
+                .HasMany(p => p.assignments)
                 .WithOne(a => a.Professor)
                 .HasForeignKey(a => a.ProfessorId);
 
             modelBuilder.Entity<Assignment>()
             .HasMany(a => a.Student)
             .WithMany(s => s.Assignment);
+            base.OnModelCreating(modelBuilder);
         }
         
     }

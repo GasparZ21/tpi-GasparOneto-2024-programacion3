@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Infraestructure.Data
             {
                 _context = context;
             }
-
+        }
             public Assignment Add(Assignment assignment)
             {
                 _context.Assignments.Add(assignment);
@@ -25,17 +26,25 @@ namespace Infraestructure.Data
                 return assignment;
             }
 
-            public Assignment Delete(Assignment assignment)
+
+            public async Task<Assignment> Delete(Assignment assignment)
+            {
+            if (assignment.Status)
             {
                 _context.Assignments.Remove(assignment);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return assignment;
             }
-
-            public Assignment? GetByStatus(bool status)
-            {
-                return _context.Assignments.FirstOrDefault(u => u.Status == status);
+            else { 
+                
+                throw new InvalidOperationException("Assignment no se puede eliminar");
+                }
             }
+
+        public async Task<List<Assignment>> GetBySubject(string subject)
+        {
+
+            return await _context.Assignments.Where(a => a.Subject == subject).ToListAsync();
         }
     }
 }
