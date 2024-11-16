@@ -16,11 +16,11 @@ namespace Domain.Entities
 
         }
         public int Id {  get; set; }
-        public string Instruction { get; set; } = null!;
+        public string Instruction { get; set; } = string.Empty;
         public bool Status { get; set; }
         public string Subject {  get; set; }
         public int StudentId { get; set; }
-        public Student Student { get; set; } = null!;
+        public ICollection<Student> Students { get; set; } = new List<Student>();
         public int ProfessorId { get; set; }
         public Professor Professor { get; set; } = null!;
 

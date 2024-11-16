@@ -9,9 +9,12 @@ namespace Domain.Interfaces
 {
     public interface IAssignmentRepository
     {
-        public List<Assignment> GetBySubject(string subject);
-        Task<Assignment> Add(Assignment assignment);
-        Task<Assignment> Delete(int status);
-        Task<Assignment> Delete(Assignment assignment);
+        public Task<List<Assignment>> GetBySubject(string subject);
+        public Task<Assignment> GetById(int id);
+        public Task<Assignment> Add(Assignment assignment);
+
+        public Task<Assignment> Delete(Assignment assignment);
+
+        public Task<Assignment> Update(Assignment assignment);
     }
 }

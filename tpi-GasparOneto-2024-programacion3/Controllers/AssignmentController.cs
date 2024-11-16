@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Services;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace tpi_GasparOneto_2024_programacion3.Controllers
@@ -16,7 +17,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpGet]
-        public ActionResult<AssignmentCreateDto> GetBySubject(string subject)
+        public ActionResult<AssignmentDto> GetBySubject(string subject)
         {
 
             try
@@ -33,7 +34,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AssignmentCreateDto> CreateAssignments([FromBody] AssignmentCreateDto assignmentCreateDto)
+        public ActionResult<AssignmentDto> CreateAssignments([FromBody] AssignmentDto assignmentCreateDto)
         {
 
             try
@@ -51,11 +52,11 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpDelete]
-        public ActionResult DeleteAssignment(AssignmentCreateDto assignmentToDelete) {
+        public async Task<ActionResult> DeleteAssignment(AssignmentDto assignmentToDelete) {
 
             try
             {
-                _assignmentService.DeleteById(assignmentToDelete.Id);
+                await _assignmentService.DeleteById(assignmentToDelete.Id);
                 return Ok();
             }
 
@@ -65,7 +66,39 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
             }
         
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAssignment(int id, [FromBody] Assignment updatedAssignment)
+        {
+            if (updatedAssignment == null)
+            {
+                return BadRequest("The assignment object cannot be null."); 
+            }
 
-    } 
-    
+            try
+            {
+                var result = await _assignmentService.UpdateAsync(id, updatedAssignment);
+
+                return Ok(result);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message); 
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message); 
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message); 
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+    }
+
 }

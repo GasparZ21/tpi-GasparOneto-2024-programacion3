@@ -26,8 +26,8 @@ namespace Infraestructure.Data
                 .HasForeignKey(a => a.ProfessorId);
 
             modelBuilder.Entity<Assignment>()
-            .HasMany(a => a.Student)
-            .WithMany(s => s.Assignment);
+            .HasOne(a => a.Professor)
+            .WithMany(s => s.assignments);
             base.OnModelCreating(modelBuilder);
         }
         

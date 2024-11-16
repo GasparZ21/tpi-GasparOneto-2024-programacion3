@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    public class AssignmentCreateDto
+    public class AssignmentDto
     {
         [Required]
         public int Id { get; set; }

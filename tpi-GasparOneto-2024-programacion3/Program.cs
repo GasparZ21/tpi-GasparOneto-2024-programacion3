@@ -1,3 +1,4 @@
+using Application.Services;
 using Domain.Interfaces;
 using Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<AssignmentService>();
+builder.Services.AddScoped<ProfessorService>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    internal class ProfessorDto
+    public class ProfessorDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
 
-        public string Subject { get; set; } = null!;
+        public string Subject { get; set; } = string.Empty;
 
         public ICollection<Assignment> Assignments { get; set; } = null!;
 

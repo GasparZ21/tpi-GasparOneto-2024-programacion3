@@ -19,32 +19,62 @@ namespace Infraestructure.Data
                 _context = context;
             }
         }
-            public Assignment Add(Assignment assignment)
+
+        public async Task<Assignment> GetById(int id)
+        {
+            return await _context.Assignments.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+            public async Task <Assignment> Add(Assignment assignment)
             {
                 _context.Assignments.Add(assignment);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return assignment;
             }
 
 
             public async Task<Assignment> Delete(Assignment assignment)
             {
+                if (assignment == null) throw new InvalidOperationException("No s eencontro el assignment");
+
             if (assignment.Status)
-            {
-                _context.Assignments.Remove(assignment);
-                await _context.SaveChangesAsync();
-                return assignment;
-            }
-            else { 
-                
-                throw new InvalidOperationException("Assignment no se puede eliminar");
+                {
+                    _context.Assignments.Remove(assignment);
+                    await _context.SaveChangesAsync();
+                    return assignment;
                 }
+                else { 
+                    throw new InvalidOperationException("Assignment no se puede eliminar");
+                 }
             }
 
         public async Task<List<Assignment>> GetBySubject(string subject)
         {
 
             return await _context.Assignments.Where(a => a.Subject == subject).ToListAsync();
+        }
+
+        public async Task<Assignment> Update(Assignment assignment) 
+        {
+
+            if(assignment == null)
+            {
+                throw new ArgumentNullException(nameof(assignment), "The assignment cannot be null.");
+            }
+
+            var existingAssignment = await _context.Assignments.FindAsync(assignment.Id);
+            if (existingAssignment == null)
+            {
+                throw new KeyNotFoundException($"No assignment found with ID {assignment.Id}");
+            }
+
+            existingAssignment.Instruction = assignment.Instruction;
+            existingAssignment.Status = assignment.Status;
+            existingAssignment.Subject = assignment.Subject;
+
+            await _context.SaveChangesAsync();
+
+            return existingAssignment;
         }
     }
 }

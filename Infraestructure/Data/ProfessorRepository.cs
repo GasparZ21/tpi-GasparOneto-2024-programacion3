@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
@@ -16,27 +17,62 @@ namespace Infraestructure.Data
         {
             {
                 _context = context;
-            } 
+            }
         }
 
-            public Task Professor Add(Assignment assignment)
+        public async Task<Professor> Add(Professor professor)
+        {
+            _context.Professors.Add(professor);
+            await _context.SaveChangesAsync();
+            return professor;
+        }
+
+
+        public async Task<Professor> DeleteAsync(Professor professor)
+        {
+            if (professor == null)
             {
-                _context.Assignments.Add(assignment);
-                _context.SaveChanges();
-                return assignment;
+                throw new ArgumentNullException(nameof(professor), "The professor object cannot be null.");
             }
 
-            public Task Professor Delete(Professor professor)
+            
+            _context.Professors.Remove(professor);
+            await _context.SaveChangesAsync(); 
+
+            return professor;
+        }
+
+        public async Task<Professor> GetByIdAsync(int id)
+        {
+            var professor = await _context.Professors.FirstOrDefaultAsync(p => p.Id == id);
+            if (professor == null)
             {
-                _context.Professor.Remove(professor);
-                _context.SaveChanges();
-                return professor;
+                throw new KeyNotFoundException($"No professor found with ID {id}");
+            }
+            return professor;
+        }
+        public async Task<Professor> Update(Professor professor)
+        {
+
+            if (professor == null)
+            {
+                throw new ArgumentNullException(nameof(professor), "The assignment cannot be null.");
             }
 
-            public Professor GetById(int id)
+            var existingProfessor = await _context.Professors.FindAsync(professor);
+            if (existingProfessor == null)
             {
-                return _context.Professors.FirstOrDefault(u => u.Id == id);
+                throw new KeyNotFoundException($"No assignment found with ID {professor.Id}");
             }
+
+            existingProfessor.Id = professor.Id;
+            existingProfessor.Name = professor.Name;
+            existingProfessor.Subject = professor.Subject;
+
+            await _context.SaveChangesAsync();
+
+            return existingProfessor;
         }
     }
-}
+  }
+

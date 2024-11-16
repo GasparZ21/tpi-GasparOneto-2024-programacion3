@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,29 +19,48 @@ namespace Infraestructure.Data
         
         }
 
-        public User Add(User user)
+        public async Task<User> Add(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return user;
         }
 
-        public User Update(User user) 
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<User> Delete(int id)
+        {
+            var user = await GetUserById(id);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "The user object cannot be null.");
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<User> Update(User user)
         {
             _context.Users.Update(user);
             _context.SaveChanges();
             return user;
         }
-        public User Delete(User user) 
-        {
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-            return user;
-        }
 
-        public User? GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            return _context.Users.FirstOrDefault(u=> u.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(s => s.Id == id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"No student found with ID {id}");
+            }
+            return user;
         }
 
     }

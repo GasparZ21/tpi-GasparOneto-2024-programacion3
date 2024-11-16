@@ -9,8 +9,10 @@ namespace Domain.Interfaces
 {
     public interface IProfessorRepository
     {
-        Task<IEnumerable<Professor>>GetById(string subject);
+        Task<Professor> GetByIdAsync(int id);
         Task<Professor> Add(Professor professor);
-        Task<Professor> Delete(int id);
+        Task<Professor> DeleteAsync(Professor professor);
+        Task<Professor> Update(Professor professor);
+
     }
 }

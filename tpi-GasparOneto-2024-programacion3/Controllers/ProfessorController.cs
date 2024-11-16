@@ -1,33 +1,35 @@
 ﻿using Application.Models;
 using Application.Services;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace tpi_GasparOneto_2024_programacion3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class ProfessorController : ControllerBase
     {
-        private readonly StudentService _studentService;
-
-        public StudentController(StudentService studentService)
+        private readonly ProfessorService _professorservice;
+        public ProfessorController(ProfessorService professorservice)
         {
-            _studentService = studentService;
+            _professorservice = professorservice;
         }
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentDto>> GetByIdAsync(int id)
+        public async Task <ActionResult<ProfessorDto>> GetByIdAsync(int id)
         {
+
             try
             {
-                var student = await _studentService.GetById(id);
 
-                return Ok(new StudentDto
+               var professor = await _professorservice.GetById(id);
+
+                return Ok(new ProfessorDto
                 {
-                    Id = student.Id,
-                    Name = student.Name,
-                    CourseSection = student.CourseSection,
+                    Id = professor.Id,
+                    Subject = professor.Subject,
+                    Assignments = professor.assignments,
+                    Name = professor.Name,
                 });
             }
 
@@ -37,14 +39,13 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
             }
 
         }
-      
         [HttpPost]
-        public ActionResult<StudentDto> CreateStudent([FromBody] StudentDto studentDto)
+        public ActionResult<ProfessorDto> CreateProfessors([FromBody] ProfessorDto professorDto)
         {
 
             try
             {
-                var newProfessor = _studentService.AddStudent(studentDto);
+                var newProfessor = _professorservice.AddProfessor;
                 return Ok(newProfessor);
             }
             catch
@@ -57,12 +58,12 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteStudent(int id)
+        public async Task<IActionResult> DeleteProfessor(int id)
         {
 
             try
             {
-                await _studentService.DeleteByIdAsync(id);
+              await _professorservice.DeleteByIdAsync(id);
                 return Ok();
             }
 
@@ -70,18 +71,19 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
             {
                 return BadRequest();
             }
+
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAssignment(int id, [FromBody] Student updatedStudent)
+        public async Task<IActionResult> UpdateAssignment(int id, [FromBody] Professor updatedProfessor)
         {
-            if (updatedStudent == null)
+            if (updatedProfessor == null)
             {
                 return BadRequest("The assignment object cannot be null.");
             }
 
             try
             {
-                var result = await _studentService.UpdateAsync(id, updatedStudent);
+                var result = await _professorservice.UpdateAsync(id, updatedProfessor);
 
                 return Ok(result);
             }
@@ -103,6 +105,5 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
     }
 }
