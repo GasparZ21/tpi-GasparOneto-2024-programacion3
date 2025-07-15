@@ -8,6 +8,8 @@ namespace Domain.Entities
 {
     public class Assignment
     {
+        public Assignment() { }
+
         public Assignment(string instruction, bool status, string subject)
         {
             Instruction = instruction;
@@ -19,8 +21,10 @@ namespace Domain.Entities
         public string Instruction { get; set; } = string.Empty;
         public bool Status { get; set; }
         public string Subject {  get; set; }
+        
         public int StudentId { get; set; }
-        public ICollection<Student> Students { get; set; } = new List<Student>();
+        public Student Student { get; set; };
+
         public int ProfessorId { get; set; }
         public Professor Professor { get; set; } = null!;
 

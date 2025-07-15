@@ -24,6 +24,13 @@ namespace Infraestructure.Data
                 .HasMany(p => p.assignments)
                 .WithOne(a => a.Professor)
                 .HasForeignKey(a => a.ProfessorId);
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.assignments)
+                .WithOne(a => a.Student)
+                .HasForeignKey(a => a.StudentId);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Assignment>()
             .HasOne(a => a.Professor)
