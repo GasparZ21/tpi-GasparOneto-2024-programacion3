@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class Student : User
     {
-        public Student : base() { }
+        
 
         public Student(int id, string name, string rol, int courseSection) : base(id, name, rol)
         {
@@ -16,6 +16,6 @@ namespace Domain.Entities
         }
 
         public int CourseSection {  get; set; }
-        public ICollection<Assignment> assignments { get; set; } = new List<Assignment>();
+        public ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
     }
 }

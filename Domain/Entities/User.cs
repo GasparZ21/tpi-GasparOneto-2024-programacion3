@@ -10,7 +10,7 @@ namespace Domain.Entities
 {
     public class User
     {
-        public User : base() { }
+       
 
         public User(int id, string name, string rol) {
             Id = id;

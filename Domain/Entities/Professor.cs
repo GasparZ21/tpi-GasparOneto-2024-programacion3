@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class Professor : User
     {
-        public Professor : base() { }
+        
 
         public Professor(int id, string name, string rol, string subject)  : base(id, name, rol)
         {

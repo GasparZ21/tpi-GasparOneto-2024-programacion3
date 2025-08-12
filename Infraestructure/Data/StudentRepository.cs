@@ -64,7 +64,7 @@ namespace Infraestructure.Data
 
             existingStudent.Id = student.Id;
             existingStudent.Name = student.Name;
-            existingStudent.assignments = student.assignments;
+            existingStudent.Assignments = student.Assignments;
 
             await _context.SaveChangesAsync();
 

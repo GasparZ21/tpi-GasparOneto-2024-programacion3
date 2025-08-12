@@ -19,22 +19,21 @@ namespace Infraestructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<Professor>()
                 .HasMany(p => p.assignments)
                 .WithOne(a => a.Professor)
-                .HasForeignKey(a => a.ProfessorId);
+                .HasForeignKey(a => a.ProfessorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Student>()
-                .HasMany(s => s.assignments)
+                .HasMany(s => s.Assignments)
                 .WithOne(a => a.Student)
-                .HasForeignKey(a => a.StudentId);
+                .HasForeignKey(a => a.StudentId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Assignment>()
-            .HasOne(a => a.Professor)
-            .WithMany(s => s.assignments);
+
+
             base.OnModelCreating(modelBuilder);
         }
         
