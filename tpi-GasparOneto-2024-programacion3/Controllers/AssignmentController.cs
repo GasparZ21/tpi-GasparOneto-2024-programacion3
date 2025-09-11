@@ -1,6 +1,7 @@
 ﻿using Application.Models;
 using Application.Services;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace tpi_GasparOneto_2024_programacion3.Controllers
@@ -34,6 +35,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "professor")]
         public ActionResult<AssignmentDto> CreateAssignments([FromBody] AssignmentDto assignmentCreateDto)
         {
 

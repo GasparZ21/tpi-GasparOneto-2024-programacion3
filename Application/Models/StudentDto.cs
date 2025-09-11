@@ -12,6 +12,6 @@ namespace Application.Models
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int CourseSection {  get; set; }
-        public ICollection<Assignment> assignments { get; set; } = null!;
+        public ICollection<Assignment> Assignments { get; set; } = null!;
     }
 }

@@ -45,7 +45,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
 
             try
             {
-                var newProfessor = _professorservice.AddProfessor;
+                var newProfessor = _professorservice.AddProfessor(professorDto);
                 return Ok(newProfessor);
             }
             catch
