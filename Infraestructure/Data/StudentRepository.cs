@@ -59,7 +59,7 @@ namespace Infraestructure.Data
             var existingStudent = await _context.Students.FindAsync(student);
             if (existingStudent == null)
             {
-                throw new KeyNotFoundException($"No assignment found with ID {student.Id}");
+                throw new KeyNotFoundException($"No student found with ID {student.Id}");
             }
 
             existingStudent.Id = student.Id;

@@ -32,7 +32,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
             if (await _context.Users.AnyAsync(u => u.Name == request.Name))
                 return BadRequest("Usuario ya registrado.");
 
-            var user = new User(0, request.Name, "user")
+            var user = new User(0, request.Name, request.Rol)
             {
                 Password = HashPassword(request.Password)
             };
@@ -54,11 +54,10 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
 
                 return Ok(new { Token = token });
             }
-            private string HashPassword(string password)
+            private static string HashPassword(string password)
             {
-                using var sha = SHA256.Create();
-                var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
                 return Convert.ToBase64String(bytes);
             }
-        }
     }
+}

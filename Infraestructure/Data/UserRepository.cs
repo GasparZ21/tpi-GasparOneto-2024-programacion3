@@ -26,19 +26,14 @@ namespace Infraestructure.Data
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public override async Task<IEnumerable<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Users.ToListAsync();
         }
 
         public async Task<User> Delete(int id)
         {
             var user = await GetUserById(id);
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user), "The user object cannot be null.");
-            }
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
@@ -49,7 +44,7 @@ namespace Infraestructure.Data
         public async Task<User> Update(User user)
         {
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return user;
         }
 

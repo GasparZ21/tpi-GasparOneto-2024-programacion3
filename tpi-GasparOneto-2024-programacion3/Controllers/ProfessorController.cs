@@ -28,7 +28,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
                 {
                     Id = professor.Id,
                     Subject = professor.Subject,
-                    Assignments = professor.assignments,
+                    Assignments = professor.Assignments,
                     Name = professor.Name,
                 });
             }
@@ -74,11 +74,11 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAssignment(int id, [FromBody] Professor updatedProfessor)
+        public async Task<IActionResult> UpdateProfessor(int id, [FromBody] Professor updatedProfessor)
         {
             if (updatedProfessor == null)
             {
-                return BadRequest("The assignment object cannot be null.");
+                return BadRequest("The professor object cannot be null.");
             }
 
             try

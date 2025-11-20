@@ -10,11 +10,13 @@ namespace Domain.Entities
     {
         public Assignment() { }
 
-        public Assignment(string instruction, bool status, string subject)
+        public Assignment(string instruction, bool status, string subject, Student student, Professor professor)
         {
             Instruction = instruction;
             Status = status;
             Subject = subject;
+            Student = student;
+            Professor = professor;
 
         }
         public int Id {  get; set; }

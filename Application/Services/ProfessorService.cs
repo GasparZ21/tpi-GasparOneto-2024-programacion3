@@ -31,7 +31,7 @@ namespace Application.Services
         }
         public async Task AddProfessor(ProfessorDto professorDto)
         {
-            var professor = new Professor(professorDto.Id,professorDto.Name, "PROFESSOR", professorDto.Subject);
+            var professor = new Professor(professorDto.Id,professorDto.Name, professorDto.Subject);
 
             await _professorRepository.Add(professor);
         }

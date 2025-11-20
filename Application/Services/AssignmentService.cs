@@ -12,15 +12,29 @@ namespace Application.Services
     public class AssignmentService
     {
         private readonly IAssignmentRepository _assignmentRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IProfessorRepository _professorRepository;
 
-        public AssignmentService(IAssignmentRepository assignmentRepository)
+        public AssignmentService(IAssignmentRepository assignmentRepository, IStudentRepository studentRepository, IProfessorRepository professorRepository)
         {
             _assignmentRepository = assignmentRepository;
+            _studentRepository = studentRepository;
+            _professorRepository = professorRepository;
+            
         }
 
         public async Task AddAssignment(AssignmentDto assignmentDTO)
         {
-            var assignment = new Assignment(assignmentDTO.Instruction, assignmentDTO.Status, assignmentDTO.Subject);
+            var student = await _studentRepository.GetByIdAsync(assignmentDTO.StudentId);
+            var professor = await _professorRepository.GetByIdAsync(assignmentDTO.ProfessorId);
+
+            Assignment assignment = new Assignment(
+                assignmentDTO.Instruction,
+                assignmentDTO.Status,
+                assignmentDTO.Subject,
+                student,
+                professor
+            );
 
             await _assignmentRepository.Add(assignment);
         }

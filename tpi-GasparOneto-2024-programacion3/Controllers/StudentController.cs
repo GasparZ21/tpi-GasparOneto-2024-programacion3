@@ -1,7 +1,10 @@
 ﻿using Application.Models;
 using Application.Services;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace tpi_GasparOneto_2024_programacion3.Controllers
 {
@@ -41,7 +44,9 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         [HttpPost]
         public ActionResult<StudentDto> CreateStudent([FromBody] StudentDto studentDto)
         {
-
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value; // sTUDENT, PROFESSOR
+            if (rol != "PROFESSOR")
+                return Forbid();
             try
             {
                 var newProfessor = _studentService.AddStudent(studentDto);
@@ -59,7 +64,9 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStudent(int id)
         {
-
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value; // sTUDENT, PROFESSOR
+            if (rol != "PROFESSOR")
+                return Forbid();
             try
             {
                 await _studentService.DeleteByIdAsync(id);
@@ -72,11 +79,14 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
             }
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAssignment(int id, [FromBody] Student updatedStudent)
+        public async Task<IActionResult> UpdateStudent(int id, [FromBody] Student updatedStudent)
         {
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value; // sTUDENT, PROFESSOR
+            if (rol != "PROFESSOR" || rol != "STUDENT")
+                return Forbid();
             if (updatedStudent == null)
             {
-                return BadRequest("The assignment object cannot be null.");
+                return BadRequest("The student object cannot be null.");
             }
 
             try

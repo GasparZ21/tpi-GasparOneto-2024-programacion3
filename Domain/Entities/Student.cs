@@ -8,9 +8,8 @@ namespace Domain.Entities
 {
     public class Student : User
     {
-        
 
-        public Student(int id, string name, string rol, int courseSection) : base(id, name, rol)
+        public Student(int id, string name, int courseSection) : base(id, name, User.Student)
         {
             CourseSection = courseSection;
         }

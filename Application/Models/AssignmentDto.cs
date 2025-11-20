@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,14 +10,13 @@ namespace Application.Models
 {
     public class AssignmentDto
     {
-        [Required]
-        public int Id { get; set; }
+        public required int Id { get; set; }
         public string Instruction {  get; set; }= string.Empty;
+        public required bool Status { get; set; }
+        public required string Subject { get; set; }=string.Empty;
 
-        [Required]
-        public bool Status { get; set; }
+        public int StudentId { get; set; }
 
-        [Required]
-        public string Subject { get; set; }=string.Empty;
+        public int ProfessorId { get; set; }
     }
 }

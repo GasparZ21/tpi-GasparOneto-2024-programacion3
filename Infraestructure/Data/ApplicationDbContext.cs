@@ -21,7 +21,7 @@ namespace Infraestructure.Data
         {
 
             modelBuilder.Entity<Professor>()
-                .HasMany(p => p.assignments)
+                .HasMany(p => p.Assignments)
                 .WithOne(a => a.Professor)
                 .HasForeignKey(a => a.ProfessorId)
                 .OnDelete(DeleteBehavior.Cascade);

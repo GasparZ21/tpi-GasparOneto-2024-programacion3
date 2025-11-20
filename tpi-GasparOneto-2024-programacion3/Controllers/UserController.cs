@@ -3,6 +3,7 @@ using Application.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace tpi_GasparOneto_2024_programacion3.Controllers
 {
@@ -60,6 +61,9 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            if (rol != "ADMIN")
+                return Forbid();
 
             try
             {

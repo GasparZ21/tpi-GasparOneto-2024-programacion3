@@ -31,7 +31,7 @@ namespace Application.Services
         }
         public async Task AddStudent(StudentDto studentDto)
         {
-            var student = new Student(studentDto.Id, studentDto.Name, "STUDENT", studentDto.CourseSection);
+            var student = new Student(studentDto.Id, studentDto.Name, studentDto.CourseSection);
 
             await _studentRepository.Add(student);
         }
@@ -49,12 +49,12 @@ namespace Application.Services
         {
             if (updatedStudent == null)
             {
-                throw new ArgumentNullException(nameof(updatedStudent), "The updated assignment cannot be null.");
+                throw new ArgumentNullException(nameof(updatedStudent), "The updated student cannot be null.");
             }
 
             if (id != updatedStudent.Id)
             {
-                throw new ArgumentException("ID mismatch between the request and the assignment object.");
+                throw new ArgumentException("ID mismatch between the request and the student object.");
             }
 
             return await _studentRepository.Update(updatedStudent);

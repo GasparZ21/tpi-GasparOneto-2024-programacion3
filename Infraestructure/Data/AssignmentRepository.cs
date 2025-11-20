@@ -22,7 +22,13 @@ namespace Infraestructure.Data
 
         public async Task<Assignment> GetById(int id)
         {
-            return await _context.Assignments.FirstOrDefaultAsync(x => x.Id == id);
+            var assignment= await _context.Assignments.FirstOrDefaultAsync(x => x.Id == id);
+            
+            if (assignment == null) {
+                throw new KeyNotFoundException($"Assignment with id {id} not found.");
+            }
+            
+            return assignment;
         }
 
             public async Task <Assignment> Add(Assignment assignment)

@@ -10,7 +10,9 @@ namespace Domain.Entities
 {
     public class User
     {
-       
+        public const string Student = "STUDENT";
+        public const string Professor = "PROFESSOR";
+        public const string Admin = "admin";
 
         public User(int id, string name, string rol) {
             Id = id;

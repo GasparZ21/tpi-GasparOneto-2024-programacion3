@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace Infraestructure.Data
             _dbcontext = dbcontext;
         }
 
-        public List<T> GetAll() 
+        public virtual async Task<IEnumerable<T>> GetAll() 
         {
-            return _dbcontext.Set<T>().ToList();
+            return await _dbcontext.Set<T>().ToListAsync();
         }
     }
 }

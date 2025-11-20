@@ -2,14 +2,19 @@
 using Application.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace tpi_GasparOneto_2024_programacion3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="PROFESSOR")]
     public class AssignmentController : ControllerBase
     {
+        private const string rol = "STUDENT,PROFESSOR";
         private readonly AssignmentService _assignmentService;
 
         public AssignmentController(AssignmentService assignmentService)
@@ -18,9 +23,9 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = rol)]
         public ActionResult<AssignmentDto> GetBySubject(string subject)
-        {
-
+        {   
             try
             {
 
@@ -35,7 +40,7 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "professor")]
+        [Authorize(Roles = rol)]
         public ActionResult<AssignmentDto> CreateAssignments([FromBody] AssignmentDto assignmentCreateDto)
         {
 
@@ -56,6 +61,10 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         [HttpDelete]
         public async Task<ActionResult> DeleteAssignment(AssignmentDto assignmentToDelete) {
 
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value; 
+            if (rol != "PROFESSOR")
+                return Forbid();
+
             try
             {
                 await _assignmentService.DeleteById(assignmentToDelete.Id);
@@ -71,6 +80,9 @@ namespace tpi_GasparOneto_2024_programacion3.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAssignment(int id, [FromBody] Assignment updatedAssignment)
         {
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value; 
+            if (rol != "PROFESSOR")
+                return Forbid();
             if (updatedAssignment == null)
             {
                 return BadRequest("The assignment object cannot be null."); 
